@@ -25,3 +25,5 @@ The question we're answering is the following: **How do annual members and casua
 - [Excel](https://www.office.com/?auth=1): Data Cleaning, Data Analyis
 - [MySQL](https://www.mysql.com/): Data Cleaning, Data Merging, Data Analysis
 - [Tableau Public](https://public.tableau.com/app/discover): Creating a dashboard
+
+
