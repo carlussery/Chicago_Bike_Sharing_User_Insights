@@ -390,12 +390,34 @@ If I haven't mentioned it already, I've done some preliminary cleaning and analy
 
 ---
 ### 6b Resetting
-Let's drop the fy19 table and recreate it.
+Let's drop the `fy19_usage` table and recreate it.
+```sql
+-- WARNING --
+DROP TABLE fy19_usage;
+-- WARNING --
+```
+After dropping the table, we deleted the above mentioned code in warning so that we don't accidently drop it again. To recreate, we just re-ran the same query above where we combined the 4 files. Now it's time to run a query to check if we have all of the months:
+```sql
+SELECT
+DISTINCT MONTHNAME(start_time), period
+FROM fy19_usage;
+```
+Output: All months are there including Septemeber. Success.
 
-    SELECT DISTINCT MONTHNAME(start_time), period
-    FROM fy19_usage;
-    -- And we have our full year dataset. Let's analyze. First, let's create a temporary table with the summary of our data. We want to know the following: min ride lenght, max ride length, avg ride length, most popular day of week,
-    -- number of rides under 1 hr, number of rides 1h or more, total number of rides. Then, we can export our table as a .csv
+And we have our full year dataset. Let's analyze. 
+
+### Step 7: Conduct descriptive analysis of the full year dataset
+
+First, let's create a temporary table with the summary of our data. This allows us to see an overview of the data and potentially spot any outliers. We want to know the following: 
+- minimum ride length
+- maximum ride length
+- average ride length
+- most popular day of week
+- number of rides under 1 hr (initial analysis done in Excel on Q1,Q2, and Q4 data suggested the number of rides started to thin out at and above the 1 hr mark)
+- number of rides 1h or more
+- total number of rides.
+
+Then, we can export our table as a .csv
     
 		SELECT 
 			MIN(SEC_TO_TIME(trip_duration)) AS min_ride_length, MAX(FLOOR(trip_duration/3600)) AS max_ride_length_hrs, 
@@ -537,7 +559,11 @@ FROM q3_trips;
 
 DESCRIBE q3_trips;
 ```
-Output: `num_of_trips` = 1640718. All columns imported successfully as per specified datatype. 
+|         |num_of_trips| 
+|---------|--------------|
+|     |1640718| 
+
+All columns imported successfully as per specified datatype. 
 
 Next create a duplicate of the Q3 table and modify the duplicate by doing the following:
 1. Adding four columns:
