@@ -1,6 +1,5 @@
-use bikes;
-TRUNCATE q1_trips;
--- Start date and time: 12/5/2023 at 9 am. Ok, we need to create the database (or schema) for our full year analysis
+
+-- Ok, we need to create the database (or schema) for our full year analysis
 CREATE DATABASE FY19_bikes
 USE FY19_bikes;
 -- Now, we need to create the tables into which we will import our data from the .csv files. We will set all datatypes to varchar and then change them later when we clean in SQL.
