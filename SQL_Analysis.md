@@ -223,8 +223,9 @@ Output: Everything is a variable character string or `varchar()`. Cool. Everythi
 -  'trip_duration' is measured in number of seconds and thus should be an `int`
 -  `birth_year` should be changed to a `year`.
 
- **Important:** As formatting can cause unwanted changes, it's best if we first duplicate the original tables then make changes on the duplicates instead of the originals. After we finish our analysis job, we could always drop the duplicate tables as a housecleaning measure.  
-
+#### 5a: Back up before moving forward!
+ **Important:** As formatting can cause unwanted changes, it's best if we first duplicate the original tables then make changes on the duplicates instead of the originals. After we finish our analysis job, we could always drop the duplicate tables as a housecleaning measure. The in the following queries we 1. duplicate the tables and 2. verifiy if they match the originals: 
+```sql
 CREATE TABLE q1_trips_copy AS
 SELECT *
 FROM q1_trips;
@@ -256,9 +257,12 @@ FROM q4_trips;
 DESCRIBE q4_trips_copy;
 EXPLAIN SELECT* FROM q4_trips;
 EXPLAIN SELECT* FROM q4_trips_copy;
+```
+Output: Duplicates successfully created.
+### 5b: Format text strings to match expected format of the output datatype
 
--- I'm getting an error while attempting to change the time columns to datetime formats. I need to format the text first and then I can modify the datatype. 
-
+I'm getting an error while attempting to change the `start_time` and `end_time` columns to datetime formats. That's because I first need to tell MySQL which of these string characters represents the month, day, year, and time as well as the delimiter separating these values (for dates it's usually either a backslash `/` or a dash `-`). Only then can I subsequently modify the datatype. We run the following queries to do this:
+```sql
 UPDATE q1_trips_copy
 SET start_time = STR_TO_DATE(start_time, '%m/%d/%Y %T');
 UPDATE q1_trips_copy
@@ -310,12 +314,23 @@ ALTER TABLE q4_trips_copy
     MODIFY COLUMN ride_length TIME,
     MODIFY COLUMN trip_duration INT,
     MODIFY COLUMN birth_year YEAR;
- 
- -- Great, Now it's time to combine the 4 quarters into a full year. But, we don't need all of the data from all of the tables. We just need the data relevant to our business question: how do
- -- casual riders (usertype = customer) use the service differently from annual members (usertype = subscribers)? Instead of going deep down the rabbit hole, we will limit our observations to time and duration. 
- -- This means we only need the following columns: trip_id (to count # of trips and keep everyting in sequential order), period (to track time by quarter), start_time (to track time by month and keep everything in sequential order)
- -- ride_length (measure duration), day_of_week (track time by day of week, duh!), category (track time of week), trip_duration (to cross check duration), and usertype (who's who). Let's build!
- 
+ ```
+Output: Column datatypes successfuly modified. 
+
+### Step 6: Merge the four datasets for complete year 2019 analysis
+Great, Now it's time to combine the 4 quarters into a full year. But, we don't need all of the data from all of the tables. We just need the data relevant to our business question: *how do
+casual riders (`usertype = customer`) use the service differently from annual members (`usertype = subscribers`)?* Instead of going deep down the rabbit hole (which we could **easily** do, believe me!), we will limit our observations to time and duration for this analysis. This means we only need the following columns: 
+- `trip_id` (to count # of trips and keep everyting in sequential order)
+- `period` (to track time by quarter)
+- `start_time` (to track time by month and keep everything in sequential order)
+- `ride_length` (to measure duration)
+- `day_of_week` (to track time by day of week, duh!😜)
+- `category` (to track time of week i.e. weekend vs weekday)
+- `trip_duration` which is measured in seconds (to cross check duration) and
+- `usertype` (The who's who of customers and subscribers).
+
+Let's build! Here's the query:
+```sql 
 CREATE TABLE fy19_usage
 	SELECT trip_id, period, start_time, ride_length, day_of_week, category, trip_duration, usertype
 	FROM q1_trips_copy
@@ -328,22 +343,34 @@ CREATE TABLE fy19_usage
 	UNION ALL
 	SELECT trip_id, period, start_time, ride_length, day_of_week, category, trip_duration, usertype
 	FROM q4_trips_copy;
+  ```
+Output: Table created successfully.
+
+#### 6a: Verify completeness of merged data
+
+Let's check our new combined table with full year results. Let's see if we have all 4 quarters, all 12 months, that the first date is Jan 1st and the last date is Dec 31st. 
+  ```sql  
+SELECT 
+	COUNT(DISTINCT period) AS no_of_periods,
+	COUNT(DISTINCT MONTH(start_time)) AS no_of_months,
+	MIN(start_time) AS first_day,
+	MAX(start_time) AS last_day
+FROM
+	fy19_usage;
+```
+Output: There is an issue here. It's showing a count of 3 for quarters and 11 for months. However, the first and last days are correct. Which quarter is missing and which month is missing? Let's run a pair of queries to find out:
+```sql
+SELECT
+	DISTINCT period
+FROM
+	fy19_usage;
     
-    -- Let's check our new combined table with full year results. Let's see if we have all 4 quarters, all 12 months, the first date on jan 1st and the last date on dec 31st. 
-    
-    SELECT 
-		COUNT(DISTINCT period) AS no_of_periods,
-        COUNT(DISTINCT MONTH(start_time)) AS no_of_months,
-        MIN(start_time) AS first_day,
-        MAX(start_time) AS last_day
-	FROM fy19_usage;
-    -- There is an issue here. It's showing a count of 3 for quarters and 11 for months. However, the first and last days are correct. Which quarter is missing and which month is missing?
-    SELECT DISTINCT period
-    FROM fy19_usage;
-    
-    SELECT DISTINCT MONTHNAME(start_time)
-    FROM fy19_usage;
-    -- Q4 is missing but, the Q4 table's information has been merged. The issue is that the period column for q4_trips_copy erronously had the value Q3. I used the update and set functions to change them. Now to update the
+SELECT
+	DISTINCT MONTHNAME(start_time)
+FROM
+	fy19_usage;
+```
+Output: Q4 is missing and September is missing. Let's tackle the missing Q4 first.  This is strange because we know that the Q4 table's information has been merged (or else we wouldn't have Dec 31st as the last date). So what's the issue? The issue is that the `period` column for q4_trips_copy erronously had the value Q3. Human input error (my bad!). I used the `UDATE` and `SET` functions to change them. Now to update the
     -- merged full year file, I could update it with with a where clause or I could just drop the table and re-run the query to re-create the table since the merged files have been changed. As for the months, September is missing.
     -- Big problem: Q3 data was too large for Excel and thus didn't load completely (the journey of these files went from original .csv -> cleaning and formating in Excel -> loading into SQL for analysis. 
     -- The Q3 dataset is incomplete so,please wait while I load the orginal in sql, clean it and format it in SQL, and put it in the place of the incomplete dataset....OK, done! Let's drop the fy19 table and recreate it.
