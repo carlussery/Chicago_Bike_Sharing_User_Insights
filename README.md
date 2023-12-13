@@ -34,7 +34,7 @@ In the initial data preparation phase, we performed the following tasks:
 
 For detailed documentation of the cleaning and preparation phase see the following:
 - Project Change log
-  - [here]()
+  - [here](Cyclistic_Bike_Users.docx)
 - SQL Cleaning and analysis log
   - [here](SQL_Analysis.md) 
 
