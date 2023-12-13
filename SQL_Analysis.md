@@ -130,7 +130,7 @@ LENGTH(ride_length),LENGTH(day_of_week),LENGTH(category),LENGTH(usertype),
 LENGTH(gender),LENGTH(birth_year)
 FROM q4_trips; 
 ```
-Output results: `birth_year` is showing 5 characters when it's supposed to be 4 (or 1 for the nulls). Let's change this cautiously by adding a column, copying the data over, testing, then replacing. 
+Output results: `birth_year` is showing 5 characters when it's supposed to be 4 (or 1 for the nulls). Let's change this cautiously by adding a column, copying the data over, testing, then replacing using the following queries: 
 ```sql
 ALTER TABLE q1_trips
 ADD trimmed_by varchar(4) AFTER birth_year;
@@ -216,9 +216,14 @@ DESCRIBE q2_trips;
 DESCRIBE q3_trips;
 DESCRIBE q4_trips;
 ```
--- Everything is a variable character string. Cool. Everything can stay as such except the following (changed to the following): trip_id(int), start_time & end_time(datetime)
--- ride_length(time), trip_duration (int) and birth_year (year).  As formatting can cause unwanted changes, it's best if we first duplicate the original tables then make changes on the duplicates
--- instead of the originals. After we finish our analysis job, we could always drop the duplicate tables as a housecleaning measure.  
+Output: Everything is a variable character string or `varchar()`. Cool. Everything can stay as such except the following: 
+- `trip_id` should be changed to an `int`
+- `start_time` & `end_time` should be changed to a `datetime`
+- `ride_length` should be formatted as a duration and thus changed to a `time`
+-  'trip_duration' is measured in number of seconds and thus should be an `int`
+-  `birth_year` should be changed to a `year`.
+
+ **Important:** As formatting can cause unwanted changes, it's best if we first duplicate the original tables then make changes on the duplicates instead of the originals. After we finish our analysis job, we could always drop the duplicate tables as a housecleaning measure.  
 
 CREATE TABLE q1_trips_copy AS
 SELECT *
