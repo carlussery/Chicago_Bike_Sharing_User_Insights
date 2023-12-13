@@ -417,7 +417,7 @@ First, let's create a temporary table with the summary of our data. This allows 
 - number of rides 1h or more
 - total number of rides.
 
-Then, we can export our table as a .csv Side note: I did run into issues calculating the outputs. You can see how I resolved these issues by clicking [here]
+Then, we can export our table as a .csv Side note: I did run into issues calculating the outputs. You can see how I resolved these issues by clicking [here](fixing_fy19.sql).
  ```sql   
 SELECT 
 	MIN(SEC_TO_TIME(trip_duration)) AS min_ride_length, MAX(FLOOR(trip_duration/3600)) AS max_ride_length_hrs, 
