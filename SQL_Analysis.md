@@ -432,7 +432,7 @@ FROM
 |---------------|-------------------|---------------|-------|---------|-----------|---------------|----------------|-----------------|----------------|-----------|
 |00:01:01|2952|00:24:07|Tuesday|August|Q3|3605410|95.93|153006|4.07|3758416|
 
-This is a raw summary
+This is a raw summary. We'll export the table as a .csv.
 Next, we'll run a query giving us a summary filtered for rides under 1hr. Upon analysis (running separate queries), Tuesday, August, and Q3 are still the top day, month, and quarter respectively. 
 ``` sql
 SELECT 
@@ -450,7 +450,9 @@ WHERE
 |---------------|---------------|---------------|-------|---------|-----------|---------------|----------------|-----------------|----------------|-----------|
 |00:01:01|00:59:59|00:14:41|Tuesday|August|Q3|3605410|100.00|0|0.00|3605410|
         
-        -- Avg ride length per user, raw and filtered
+Again, we'll export the table as a .csv.
+Next, we'll create and pull two temporary tables one raw (unfiltered) and one filtered (for trips under 1 hour) telling us the average ride length per user with the following queries:
+```sql
 CREATE TEMPORARY TABLE raw_vs_filtered
 	SELECT
 		usertype, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_length_raw,
@@ -467,12 +469,23 @@ GROUP BY usertype;
     
     SELECT * FROM raw_vs_filtered;
     SELECT * FROM filtered;
-    
+ ```
+To see and compare this data side by side, we'll combine the columns of the two temporary tables using an `INNER JOIN` in the following query:
+```sql
     SELECT r.usertype, r.avg_length_raw, f.avg_length_filtered, r.total_rides_raw, f.total_rides_filtered
     FROM raw_vs_filtered r
-    JOIN filtered f ON r.usertype = f.usertype; -- here is the output
+    JOIN filtered f ON r.usertype = f.usertype;
+```
+The output is as follows:
+|usertype|avg_length_raw|avg_length_filtered|total_rides_raw|total_rides_filtered|
+|--------|--------------|-------------------|---------------|--------------------|
+|Subscriber|00:14:18|00:12:17|2901431|2889500|
+|Customer|00:57:20|00:24:22|856985|715910|
     
--- Average ride length and total rides per day per customer, filtered for rides under 1 hour
+Upon analysis, we've decided to continue down the road of focusing further analysis only on rides under 1 hour in duration. This overwhelmingly reflects normal usage and we don't have to deal with the headache of extreme outliers (ride durations of thousands of hours = malfunctions or abandoned bikes...maybe?) skewing subsequent analysis. We'll export this table as a .csv in case we need to justify our choice to stakeholders.
+
+Next, we'll create and pull two temporary tables each one telling us the average ride length and total rides per day per customer, filtered for rides under 1 hour: 
+```sql
 CREATE TEMPORARY TABLE length_cust_days
 	SELECT day_of_week, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS total_customer_rides
 	FROM fy19_usage 
@@ -484,11 +497,24 @@ CREATE TEMPORARY TABLE length_subs_days
 	FROM fy19_usage 
 	WHERE usertype = 'Subscriber' AND trip_duration <3600
 	GROUP BY day_of_week;
-
+```
+Then we'll combine them with the `JOIN` function:
+```sql
 SELECT c.day_of_week, c.avg_customer_length, c.total_customer_rides, s.avg_subscriber_length, s.total_subscriber_rides
 FROM length_cust_days c 
-JOIN length_subs_days s ON c.day_of_week = s.day_of_week; -- here is the export
+JOIN length_subs_days s ON c.day_of_week = s.day_of_week; 
+```
+|day_of_week|avg_customer_length|total_customer_rides|avg_subscriber_length|total_subscriber_rides|
+|-----------|-------------------|--------------------|---------------------|----------------------|
+|Tue|00:23:16|75525|00:12:03|495459|
+|Wed|00:23:01|76897|00:12:06|492728|
+|Thu|00:23:13|85102|00:12:02|480395|
+|Fri|00:23:55|98238|00:11:56|442102|
+|Sat|00:25:42|161286|00:13:24|274556|
+|Sun|00:25:13|134532|00:13:16|246993|
+|Mon|00:24:18|84330|00:12:05|457267|
 
+And we'll export the table as a .csv. **note:** We later sorted this table in Excel to put the days of the week in order starting from Sunday. 
 -- Average ride length and total rides per month per customer, filtered for rides under 1 hour
 CREATE TEMPORARY TABLE length_cust_months
 	SELECT MONTHNAME(start_time) AS fy19_month, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS num_customer_rides
