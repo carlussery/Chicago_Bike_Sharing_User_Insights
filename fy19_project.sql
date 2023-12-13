@@ -1,4 +1,3 @@
-
 -- Ok, we need to create the database (or schema) for our full year analysis
 CREATE DATABASE FY19_bikes
 USE FY19_bikes;
