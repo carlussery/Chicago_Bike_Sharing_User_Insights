@@ -556,6 +556,7 @@ And join:
 
 Exporting this as well.
 And finally, we'll do the same for average ride length and total rides per quarter per customer, filtered for rides under 1 hour
+```sql
 CREATE TEMPORARY TABLE length_cust_quarters
 	SELECT period, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS num_customer_rides
 	FROM fy19_usage 
@@ -569,12 +570,21 @@ CREATE TEMPORARY TABLE length_subs_quarters
 	WHERE usertype = 'Subscriber' AND trip_duration <3600
 	GROUP BY period
     ORDER BY period; 
-    
+```
+And combine using `JOIN`:
+```sql
    SELECT c.period, c.avg_customer_length, c.num_customer_rides, s.avg_subscriber_length, s.num_subscriber_rides
    FROM length_cust_quarters c 
    JOIN length_subs_quarters s ON c.period  = s.period; -- here is the export
-   
-   -- And that's the end of this SeQueL. I'll save and export my scripts. 
+ ```
+|period|avg_customer_length|num_customer_rides|avg_subscriber_length|num_subscriber_rides|
+|------|-------------------|------------------|---------------------|--------------------|
+|Q1|00:22:54|20199|00:10:33|340592|
+|Q2|00:25:33|193748|00:12:35|808839|
+|Q3|00:24:31|408679|00:13:12|1143642|
+|Q4|00:21:30|93284|00:11:04|596427|
+  
+We export that...annd that's the end of this SeQueL! 😆 My final actions: saving and exporting these SQL script so we can repeat some or all of these queries in the future.  
 
    ---
    
