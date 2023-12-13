@@ -11,7 +11,7 @@ The question we're answering is the following: **How do annual members and casua
 ### Data Sources
 
 - The data used was acquired from Divvy and made available to the public. 
-  - [link to datasets](https://divvy-tripdata.s3.amazonaws.com/index.html)
+  - [Link to datasets](https://divvy-tripdata.s3.amazonaws.com/index.html)
   - [License for public use](https://divvybikes.com/data-license-agreement) 
 
 - 2019 Trip data: The primary datasets used for this analysis are the following:
