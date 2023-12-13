@@ -498,7 +498,8 @@ CREATE TEMPORARY TABLE length_subs_quarters
 ## Appendix 
 
 ### Detour of importing, cleaning, and formating the raw .csv file of the Q3 dataset
--- Create the table for Q3 data with columns matching that of the .csv file
+Create the table for Q3 data with columns matching that of the .csv file
+```sql
 CREATE TABLE q3_trips (
 trip_id INT NOT NULL, 
 start_time DATETIME NOT NULL, 
@@ -512,8 +513,9 @@ to_station_name VARCHAR(255) NOT NULL,
 usertype VARCHAR(255) NOT NULL, 
 gender VARCHAR(255), 
 birthyear YEAR);
-    
--- Load data from .csv file into table
+```    
+Success. Load data from .csv file into table
+```sql
 LOAD DATA INFILE
 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/Divvy_Trips_2019_Q3.csv'
 INTO TABLE q3_trips 
@@ -521,35 +523,49 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
-
-    
-
--- Check columns and number of rows for successful execution. Number of trips should be 1640718 and...it is!
+```
+Success. Check columns for successful execution 
+```sql
 SELECT * from q3_trips
 LIMIT 100;
+```
+Sucess. Check number of rows (trips) and datatype for each column. Number of trips should be 1640718:
 
+```sql
 SELECT COUNT(trip_id) AS num_of_trips
 FROM q3_trips;
 
 DESCRIBE q3_trips;
--- Next create a duplicate of the Q3 table and modify the duplicate by doing the following:
--- 1. adding four columns: period (after trip_id, value=Q3), ride_length (after end_time, value= time between end and start), day_of_week ( after ride_length, value = day of start_time), category (after day_of_week, value = day_of_week as 'Weekend' or 'Weekday')
--- 2. Removing the commas and decimals from the tripduration and changing the datatype to int. 
--- 3. If all goes well, replace the original with the duplicate and rename it to match the original 
+```
+Output: `num_of_trips` = 1640718. All columns imported successfully as per specified datatype. 
 
+Next create a duplicate of the Q3 table and modify the duplicate by doing the following:
+1. Adding four columns:
+   - `period` (after `trip_id`, value= 'Q3')
+   - `ride_length` (after `end_time`, value= time difference between `end_time` and `start_time`)
+   - `day_of_week` ( after `ride_length`, value = `day` of `start_time`)
+   - `category` (after `day_of_week`, value = 'Weekend' or 'Weekday')
+2.  Removing the commas and decimals from the `tripduration` column and changing the datatype to `int` in addition to renaming the column to `trip_duration`.
+3.  If all goes well, replace the original with the duplicate and rename it to match the original. 
+
+Start with duplicating the table and checking it:
+```sql
 CREATE TABLE q3_cleaned AS
 SELECT * FROM q3_trips;
 
 SELECT * FROM q3_cleaned
 LIMIT 1000;
-
+``
+Then we add our four columns and set their values:
+```sql
 ALTER TABLE q3_cleaned
 	ADD period VARCHAR(2) AFTER trip_id, 
 	ADD ride_length TIME AFTER end_time,
-    ADD day_of_week DATE AFTER ride_length,
-    ADD category VARCHAR(7) AFTER day_of_week;
+    	ADD day_of_week DATE AFTER ride_length,
+    	ADD category VARCHAR(7) AFTER day_of_week;
     
-UPDATE q3_cleaned SET
+UPDATE q3_cleaned
+SET
 period = 'Q3',
 ride_length = end_time - start_time,
 day_of_week = DAYNAME(start_time);  
@@ -565,12 +581,14 @@ UPDATE q3_cleaned SET
 day_of_week  = DAYNAME(start_time);
 
 UPDATE q3_cleaned
-SET category = CASE
+SET category =
+CASE
 WHEN day_of_week = 'Saturday' OR day_of_week = 'Sunday' THEN 'Weekend'
 ELSE 'Weekday'
 END;
-
--- checking to see if the Weekend/Weekday logical statements worked. 
+``
+Checking to see if the Weekend/Weekday logical statements worked.
+```sql
 SELECT DISTINCT category
 FROM q3_cleaned;
 
@@ -578,8 +596,9 @@ SELECT day_of_week, category
 FROM q3_cleaned
 WHERE day_of_week = 'Friday'
 LIMIT 100;
-
--- formatting trip duration column
+```
+Looks good. Now on to formatting trip duration column by removing the commas and decimal points, changing the datatype, and renaming & replacing it: 
+```sql
 UPDATE q3_cleaned
 SET tripduration = REPLACE(tripduration,',','');
 
@@ -596,8 +615,9 @@ RENAME COLUMN tripduration TO trip_duration;
 
 ALTER TABLE q3_trips_copy
 RENAME COLUMN tripduration TO trip_duration;
-
--- Everything looks good. Now time to replace and make a copy 
+```
+Everything looks good. Now time to replace and make a copy. Note that I like to take precautions when writing code and query that removes something. 
+```sql
 -- WARNING --
 drop table q3_trips;
 -- WARNING --
@@ -608,8 +628,8 @@ SELECT * FROM q3_trips;
 
 SELECT*
 FROM q3_trips_copy;
-
--- and we're back on track. Detour over 🙂. You may now go back to where you left off by clicking [here](#resetting)
+```
+and we're back on track. Detour over 🙂. You may now go back to where you left off by clicking [here](#resetting)
    
 
 
