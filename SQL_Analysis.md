@@ -21,7 +21,8 @@ CREATE TABLE q1_trips (
   from_station_name varchar(200),to_station_id varchar(200),
   to_station_name varchar(200),usertype varchar(200),
   gender varchar(200), birth_year varchar(200));
-    
+ ```
+```sql   
 CREATE TABLE q2_trips (
   trip_id varchar(200), period varchar(200),
   start_time varchar(200), end_time varchar(200),
@@ -31,7 +32,8 @@ CREATE TABLE q2_trips (
   from_station_name varchar(200), to_station_id varchar(200),
   to_station_name varchar(200), usertype varchar(200),
   gender varchar(200), birth_year varchar(200));
-    
+```
+```sql    
 CREATE TABLE q3_trips (
   trip_id varchar(200), period varchar(200),
   start_time varchar(200), end_time varchar(200),
@@ -41,7 +43,8 @@ CREATE TABLE q3_trips (
   from_station_name varchar(200), to_station_id varchar(200),
   to_station_name varchar(200), usertype varchar(200),
   gender varchar(200), birth_year varchar(200));
-    
+```
+```sql    
 CREATE TABLE q4_trips (
   trip_id varchar(200), period varchar(200),
   start_time varchar(200), end_time varchar(200), 
@@ -63,21 +66,24 @@ LOAD DATA INFILE
 INTO TABLE q1_trips FIELDS TERMINATED BY ','
 IGNORE 1 LINES;
 COMMIT;  
-
+```
+```sql
 SET autocommit=0;    
 LOAD DATA INFILE
 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/Divvy_Trips_2019_Q2_Cleaned.csv'
 INTO TABLE q2_trips FIELDS TERMINATED BY ','
 IGNORE 1 LINES;
 COMMIT;  
-
+```
+```sql
 SET autocommit=0;    
 LOAD DATA INFILE
 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/Divvy_Trips_2019_Q3_Cleaned.csv'
 INTO TABLE q3_trips FIELDS TERMINATED BY ','
 IGNORE 1 LINES;
 COMMIT;  
-
+```
+```sql
 SET autocommit=0;    
 LOAD DATA INFILE
 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/Divvy_Trips_2019_Q4_Cleaned.csv'
@@ -111,19 +117,22 @@ LENGTH(trip_id),LENGTH(period),LENGTH(start_time),LENGTH(end_time),
 LENGTH(ride_length),LENGTH(day_of_week),LENGTH(category),LENGTH(usertype),
 LENGTH(gender),LENGTH(birth_year)
 FROM q1_trips;   
-
+```
+```sql
  SELECT
 LENGTH(trip_id),LENGTH(period),LENGTH(start_time),LENGTH(end_time),
 LENGTH(ride_length),LENGTH(day_of_week),LENGTH(category),LENGTH(usertype),
 LENGTH(gender),LENGTH(birth_year)
 FROM q2_trips; 
-
+```
+```sql
 SELECT
 LENGTH(trip_id),LENGTH(period),LENGTH(start_time),LENGTH(end_time),
 LENGTH(ride_length),LENGTH(day_of_week),LENGTH(category),LENGTH(usertype),
 LENGTH(gender),LENGTH(birth_year)
 FROM q3_trips; 
-
+```
+```sql
 SELECT
 LENGTH(trip_id),LENGTH(period),LENGTH(start_time),LENGTH(end_time),
 LENGTH(ride_length),LENGTH(day_of_week),LENGTH(category),LENGTH(usertype),
@@ -148,7 +157,9 @@ RENAME COLUMN trimmed_by TO birth_year;
 
 SELECT LENGTH(birth_year)
 FROM q1_trips;
--- Q2
+```
+Q2
+```sql
 ALTER TABLE q2_trips
 ADD trimmed_by varchar(4) AFTER birth_year;
 
@@ -168,7 +179,9 @@ RENAME COLUMN trimmed_by TO birth_year;
 
 SELECT LENGTH(birth_year)
 FROM q2_trips;
--- Q3
+```
+Q3
+```sql
 ALTER TABLE q3_trips
 ADD trimmed_by varchar(4) AFTER birth_year;
 
@@ -186,7 +199,9 @@ RENAME COLUMN trimmed_by TO birth_year;
 
 SELECT LENGTH(birth_year)
 FROM q3_trips;
--- Q4
+```
+Q4
+```sql
 ALTER TABLE q4_trips
 ADD trimmed_by varchar(4) AFTER birth_year;
 
@@ -233,7 +248,9 @@ FROM q1_trips;
 DESCRIBE q1_trips_copy;
 EXPLAIN SELECT* FROM q1_trips;
 EXPLAIN SELECT* FROM q1_trips_copy;
--- Q2
+```
+Q2
+```sql
 CREATE TABLE q2_trips_copy AS
 SELECT *
 FROM q2_trips;
@@ -241,7 +258,9 @@ FROM q2_trips;
 DESCRIBE q2_trips_copy;
 EXPLAIN SELECT* FROM q2_trips;
 EXPLAIN SELECT* FROM q2_trips_copy;
--- Q3
+```
+Q3
+```sql
 CREATE TABLE q3_trips_copy AS
 SELECT *
 FROM q3_trips;
@@ -249,7 +268,9 @@ FROM q3_trips;
 DESCRIBE q3_trips_copy;
 EXPLAIN SELECT* FROM q3_trips;
 EXPLAIN SELECT* FROM q3_trips_copy;
--- Q4
+```
+Q4
+```sql
 CREATE TABLE q4_trips_copy AS
 SELECT *
 FROM q4_trips;
@@ -275,7 +296,9 @@ ALTER TABLE q1_trips_copy
     MODIFY COLUMN ride_length TIME,
     MODIFY COLUMN trip_duration INT,
     MODIFY COLUMN birth_year YEAR;
--- Q2
+```
+Q2
+```sql
 UPDATE q2_trips_copy
 SET start_time = STR_TO_DATE(start_time, '%m/%d/%Y %T');
 UPDATE q2_trips_copy
@@ -288,7 +311,9 @@ ALTER TABLE q2_trips_copy
     MODIFY COLUMN ride_length TIME,
     MODIFY COLUMN trip_duration INT,
     MODIFY COLUMN birth_year YEAR;
--- Q3
+```
+Q3
+```sql
 UPDATE q3_trips_copy
 SET start_time = STR_TO_DATE(start_time, '%m/%d/%Y %T');
 UPDATE q3_trips_copy
@@ -301,7 +326,9 @@ ALTER TABLE q3_trips_copy
     MODIFY COLUMN ride_length TIME,
     MODIFY COLUMN trip_duration INT,
     MODIFY COLUMN birth_year YEAR;
--- Q4
+```
+Q4
+```sql
 UPDATE q4_trips_copy
 SET start_time = STR_TO_DATE(start_time, '%m/%d/%Y %T');
 UPDATE q4_trips_copy
