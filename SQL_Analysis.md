@@ -379,9 +379,18 @@ SET period = 'Q4';
 ```
 Now to update the merged full year file to reflect the changes I've just made to `q4_trips_copy` , I could update it using the `UPDATE` function with a `WHERE` clause specifying the months of Oct, Nov, and Dec or I could just drop the table and re-run the query to re-create the table since one of the merged files has been changed. I chose the latter as it's simpler. I like simple.
 
-As for the months, September is missing.
-    -- Big problem: Q3 data was too large for Excel and thus didn't load completely (the journey of these files went from original .csv -> cleaning and formating in Excel -> loading into SQL for analysis. 
-    -- The Q3 dataset is incomplete so,please wait while I load the orginal in sql, clean it and format it in SQL, and put it in the place of the incomplete dataset....OK, done! Let's drop the fy19 table and recreate it.
+Now onto the next issue: September is missing. Ok, it has come to my attention that we have a **big** problem: 
+
+If I haven't mentioned it already, I've done some preliminary cleaning and analysis in Excel before uploading these files to SQL. However, the Q3 dataset was too large for Excel and thus didn't load (nor save!)completely (the journey of these files went from original .csv -> cleaning and formating in Excel -> loading into SQL for analysis. 
+
+**The skinny**: The Q3 dataset we've loaded into SQL is *incomplete* so, please wait while I load the orginal in SQL, clean and format it in SQL, and put it in the place of the incomplete dataset....OK, done! 
+
+---
+(If you insist on wanting to see nitty gritty of how I loaded, cleaned, and formated the raw Q3 .csv file to match the cleaning and formatting of the other files which were done in Excel then take the detour [here](#appendix) 
+
+---
+Let's drop the fy19 table and recreate it.
+
     SELECT DISTINCT MONTHNAME(start_time), period
     FROM fy19_usage;
     -- And we have our full year dataset. Let's analyze. First, let's create a temporary table with the summary of our data. We want to know the following: min ride lenght, max ride length, avg ride length, most popular day of week,
@@ -482,6 +491,14 @@ CREATE TEMPORARY TABLE length_subs_quarters
    JOIN length_subs_quarters s ON c.period  = s.period; -- here is the export
    
    -- And that's the end of this SeQueL. I'll save and export my scripts. 
+
+   ---
+   
+## Appendix 
+
+### Detour of importing, cleaning, and formating the raw .csv file of the Q3 dataset
+
+   
 
 
     
