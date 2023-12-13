@@ -22,8 +22,6 @@ The question we're answering is the following: **How do annual members and casua
 
 ### Tools
 
-- Excel: cleaning, filtering & sorting, manipulation, and descriptive analysis of Q1, Q2, and Q4 datasets
-- MySQL
-  - cleaning, filtering & sorting, manipulation, and descriptive analysis of much larger Q3 dataset
-  - Merging all four datasets into a full year dataset
-  - Validation, descriptive analysis, and export of summary statistics from full year dataset
+- [Excel](https://www.office.com/?auth=1): Data Cleaning, Data Analyis
+- [MySQL](https://www.mysql.com/): Data Cleaning, Data Merging, Data Analysis
+- [Tableau Public](https://public.tableau.com/app/discover): Creating a dashboard
