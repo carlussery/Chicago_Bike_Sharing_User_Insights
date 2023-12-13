@@ -20,3 +20,10 @@ The question we're answering is the following: **How do annual members and casua
   - Divvy_Trips_2019_Q3.csv
   - Divvy_Trips_2019_Q4.csv
 
+### Tools
+
+- Excel: cleaning, filtering & sorting, manipulation, and descriptive analysis of Q1, Q2, and Q4 datasets
+- MySQL
+  - cleaning, filtering & sorting, manipulation, and descriptive analysis of much larger Q3 dataset
+  - Merging all four datasets into a full year dataset
+  - Validation, descriptive analysis, and export of summary statistics from full year dataset
