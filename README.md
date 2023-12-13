@@ -26,4 +26,16 @@ The question we're answering is the following: **How do annual members and casua
 - [MySQL](https://www.mysql.com/): Data Cleaning, Data Merging, Data Analysis
 - [Tableau Public](https://public.tableau.com/app/discover): Creating a dashboard
 
+### Data Cleaning / Preparation
+In the initial data preparation phase, we performed the following tasks:
+1. Data loading and inspection.
+2. Data cleaning and formating
+3. Data merging
+
+For detailed documentation of the cleaning and preparation phase see the following:
+- Project Change log
+  - [here]()
+- SQL Cleaning and analysis log
+  - [here](SQL_Analysis.md) 
+
 
