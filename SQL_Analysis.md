@@ -446,8 +446,8 @@ FROM
 WHERE
 	trip_duration < 3600;
 ```
-|min_ride_length|max_ride_length|avg_ride_length|top_day,top_month|top_quarter|rides_under_1hr|percent_of_total|rides_1hr_or_more|percent_of_total|total_rides|
-|---------------|---------------|---------------|-----------------|-----------|---------------|----------------|-----------------|----------------|-----------|
+|min_ride_length|max_ride_length|avg_ride_length|top_day|top_month|top_quarter|rides_under_1hr|percent_of_total|rides_1hr_or_more|percent_of_total|total_rides|
+|---------------|---------------|---------------|-------|---------|-----------|---------------|----------------|-----------------|----------------|-----------|
 |00:01:01|00:59:59|00:14:41|Tuesday|August|Q3|3605410|100.00|0|0.00|3605410|
         
         -- Avg ride length per user, raw and filtered
