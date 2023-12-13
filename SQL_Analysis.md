@@ -370,8 +370,16 @@ SELECT
 FROM
 	fy19_usage;
 ```
-Output: Q4 is missing and September is missing. Let's tackle the missing Q4 first.  This is strange because we know that the Q4 table's information has been merged (or else we wouldn't have Dec 31st as the last date). So what's the issue? The issue is that the `period` column for q4_trips_copy erronously had the value Q3. Human input error (my bad!). I used the `UDATE` and `SET` functions to change them. Now to update the
-    -- merged full year file, I could update it with with a where clause or I could just drop the table and re-run the query to re-create the table since the merged files have been changed. As for the months, September is missing.
+Output: Q4 is missing and September is missing. 
+
+Let's tackle the missing Q4 first.  This is strange because we know that the Q4 table's information has been merged (or else we wouldn't have Dec 31st as the last date). So what's the issue? The issue is that the `period` column for q4_trips_copy erronously had the value Q3. Human input error (my bad!). I used the `UDATE` and `SET` functions to change them. Simple query:
+```sql
+UPDATE TABLE q4_trips_copy
+SET period = 'Q4';
+```
+Now to update the merged full year file to reflect the changes I've just made to `q4_trips_copy` , I could update it using the `UPDATE` function with a `WHERE` clause specifying the months of Oct, Nov, and Dec or I could just drop the table and re-run the query to re-create the table since one of the merged files has been changed. I chose the latter as it's simpler. I like simple.
+
+As for the months, September is missing.
     -- Big problem: Q3 data was too large for Excel and thus didn't load completely (the journey of these files went from original .csv -> cleaning and formating in Excel -> loading into SQL for analysis. 
     -- The Q3 dataset is incomplete so,please wait while I load the orginal in sql, clean it and format it in SQL, and put it in the place of the incomplete dataset....OK, done! Let's drop the fy19 table and recreate it.
     SELECT DISTINCT MONTHNAME(start_time), period
