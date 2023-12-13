@@ -418,14 +418,20 @@ First, let's create a temporary table with the summary of our data. This allows 
 - total number of rides.
 
 Then, we can export our table as a .csv
-    
-		SELECT 
-			MIN(SEC_TO_TIME(trip_duration)) AS min_ride_length, MAX(FLOOR(trip_duration/3600)) AS max_ride_length_hrs, 
-			SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_ride_length, 'Tuesday' AS top_day, 'August' AS top_month, 'Q3' AS top_quarter, 
-            SUM(CASE WHEN trip_duration <3600 THEN 1 ELSE 0 END) AS rides_under_1hr, ROUND((SUM(CASE WHEN trip_duration <3600 THEN 1 ELSE 0 END)/COUNT(trip_id) * 100),2) AS percent_of_total,
-			SUM(CASE WHEN trip_duration >=3600 THEN 1 ELSE 0 END) AS rides_1hr_or_more, ROUND((SUM(CASE WHEN trip_duration >=3600 THEN 1 ELSE 0 END)/COUNT(trip_id) * 100),2) AS percent_of_total,
-            COUNT(trip_id) AS total_rides
-		FROM fy19_usage; -- This is a raw summary
+ ```sql   
+SELECT 
+	MIN(SEC_TO_TIME(trip_duration)) AS min_ride_length, MAX(FLOOR(trip_duration/3600)) AS max_ride_length_hrs, 
+	SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_ride_length, 'Tuesday' AS top_day, 'August' AS top_month, 'Q3' AS top_quarter, 
+ 	SUM(CASE WHEN trip_duration <3600 THEN 1 ELSE 0 END) AS rides_under_1hr, ROUND((SUM(CASE WHEN trip_duration <3600 THEN 1 ELSE 0 END)/COUNT(trip_id) * 100),2) AS percent_of_total,
+	SUM(CASE WHEN trip_duration >=3600 THEN 1 ELSE 0 END) AS rides_1hr_or_more, ROUND((SUM(CASE WHEN trip_duration >=3600 THEN 1 ELSE 0 END)/COUNT(trip_id) * 100),2) AS percent_of_total,
+ 	COUNT(trip_id) AS total_rides
+FROM fy19_usage;
+```
+|min_ride_length|max_ride_length_hrs|avg_ride_length|top_day,top_month|top_quarter|rides_under_1hr|percent_of_total|rides_1hr_or_more|percent_of_total|total_rides|
+|---------------|-------------------|---------------|-----------------|-----------|---------------|----------------|-----------------|----------------|-----------|
+|00:01:01|2952|00:24:07|Tuesday|August|Q3|3605410|95.93|153006|4.07|3758416|
+
+This is a raw summary
     -- Here is a summary filtered for rides under 1hr. The Tuesday, August, and Q3 are still the top day, month, and quarter respectively. 
     SELECT 
 			MIN(SEC_TO_TIME(trip_duration)) AS min_ride_length, MAX(SEC_TO_TIME(trip_duration)) AS max_ride_length, 
