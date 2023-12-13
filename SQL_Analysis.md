@@ -428,8 +428,8 @@ SELECT
 FROM
 	fy19_usage;
 ```
-|min_ride_length|max_ride_length_hrs|avg_ride_length|top_day,top_month|top_quarter|rides_under_1hr|percent_of_total|rides_1hr_or_more|percent_of_total|total_rides|
-|---------------|-------------------|---------------|-----------------|-----------|---------------|----------------|-----------------|----------------|-----------|
+|min_ride_length|max_ride_length_hrs|avg_ride_length|top_day|top_month|top_quarter|rides_under_1hr|percent_of_total|rides_1hr_or_more|percent_of_total|total_rides|
+|---------------|-------------------|---------------|-------|---------|-----------|---------------|----------------|-----------------|----------------|-----------|
 |00:01:01|2952|00:24:07|Tuesday|August|Q3|3605410|95.93|153006|4.07|3758416|
 
 This is a raw summary
