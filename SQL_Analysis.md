@@ -515,7 +515,9 @@ JOIN length_subs_days s ON c.day_of_week = s.day_of_week;
 |Mon|00:24:18|84330|00:12:05|457267|
 
 And we'll export the table as a .csv. **note:** We later sorted this table in Excel to put the days of the week in order starting from Sunday. 
--- Average ride length and total rides per month per customer, filtered for rides under 1 hour
+
+We'll do the same for average ride length and total rides per month per customer, filtered for rides under 1 hour. Note that `MONTH` is a functon in SQL so we chose another name (`fy19_month`) for the column with the months:
+```sql
 CREATE TEMPORARY TABLE length_cust_months
 	SELECT MONTHNAME(start_time) AS fy19_month, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS num_customer_rides
 	FROM fy19_usage 
@@ -529,12 +531,31 @@ CREATE TEMPORARY TABLE length_subs_months
 	WHERE usertype = 'Subscriber' AND trip_duration <3600
 	GROUP BY MONTHNAME(start_time)
     ORDER BY start_time;
-    
+  ```
+And join:
+```sql
    SELECT c.fy19_month, c.avg_customer_length, c.num_customer_rides, s.avg_subscriber_length, s.num_subscriber_rides
    FROM length_cust_months c 
-   JOIN length_subs_months s ON c.fy19_month  = s.fy19_month; -- here is the export
-   
- -- Average ride length and total rides per quarter per customer, filtered for rides under 1 hour
+   JOIN length_subs_months s ON c.fy19_month  = s.fy19_month; 
+```
+|fy19_month|avg_customer_length|num_customer_rides|avg_subscriber_length|num_subscriber_rides|
+|----------|-------------------|------------------|---------------------|--------------------|
+|January|00:22:09|4020|00:10:29|98189|
+|February|00:19:10|2393|00:10:14|93131|
+|March|00:23:46|13786|00:10:48|149272|
+|April|00:26:00|39017|00:11:53|216713|
+|May|00:25:50|66408|00:12:32|284460|
+|June|00:25:08|88323|00:13:09|307666|
+|July|00:25:05|144160|00:13:36|379475|
+|August|00:24:38|154888|00:13:17|401473|
+|September|00:23:37|109631|00:12:41|362694|
+|October|00:22:01|61810|00:11:33|299956|
+|November|00:19:48|16961|00:10:37|158102|
+|December|00:21:19|14513|00:10:33|138369|
+
+
+Exporting this as well.
+And finally, we'll do the same for average ride length and total rides per quarter per customer, filtered for rides under 1 hour
 CREATE TEMPORARY TABLE length_cust_quarters
 	SELECT period, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS num_customer_rides
 	FROM fy19_usage 
