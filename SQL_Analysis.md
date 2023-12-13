@@ -556,20 +556,24 @@ SELECT * FROM q3_trips;
 SELECT * FROM q3_cleaned
 LIMIT 1000;
 ``
-Then we add our four columns and set their values:
+Then we add our four columns: 
 ```sql
 ALTER TABLE q3_cleaned
 	ADD period VARCHAR(2) AFTER trip_id, 
 	ADD ride_length TIME AFTER end_time,
     	ADD day_of_week DATE AFTER ride_length,
     	ADD category VARCHAR(7) AFTER day_of_week;
-    
+ ```
+and set their values:
+```sql
 UPDATE q3_cleaned
 SET
 period = 'Q3',
 ride_length = end_time - start_time,
 day_of_week = DAYNAME(start_time);  
-
+```
+Working with dates, times, and datetimes can be tricky in MySQL. It often requires making sure the datatype is suitable: 
+```sql
 ALTER TABLE q3_cleaned
 MODIFY COLUMN day_of_week VARCHAR(255);
 
@@ -579,7 +583,9 @@ LIMIT 100;
 
 UPDATE q3_cleaned SET
 day_of_week  = DAYNAME(start_time);
-
+```
+Using a logical statement to print 'Weekend' in the case where `day_of_week` column shows 'Saturday' or 'Sunday' as a value and to print 'Weekday' in all other cases:
+```sql
 UPDATE q3_cleaned
 SET category =
 CASE
