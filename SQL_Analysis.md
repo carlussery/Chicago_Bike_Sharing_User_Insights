@@ -629,7 +629,7 @@ SELECT * FROM q3_trips;
 SELECT*
 FROM q3_trips_copy;
 ```
-and we're back on track. Detour over 🙂. You may now go back to where you left off by clicking [here](#resetting)
+and we're back on track. Detour over 🙂. You may now go back to where you left off by clicking [here](#6b-resetting)
    
 
 
