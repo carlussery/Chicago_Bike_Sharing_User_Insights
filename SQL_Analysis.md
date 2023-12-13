@@ -1,6 +1,6 @@
 # Cleaning, Merging, and Analysis in SQL
 
-## Environment: MySQL Workbench
+### Environment: MySQL Workbench
 
 ### Step 1: Create a database
 Ok, we need to create the database (or schema) for our full year analysis
