@@ -1,6 +1,18 @@
 # Case Study: Chicago Bike Sharing User Insights
 
-### Overview
+## Table of Contents
+
+- [Case Study Overview](#case-study-overview)
+- [The Question](#the-question)
+- [Data Sources](#data-sources)
+- [Tools](#tools)
+- [Data Cleaning / Prepartion](#data-cleaning-/-prepartion)
+- [Limitations](#limitations)
+- [Data Analysis](#data-analysis)
+- [Results/Findings](#results/findings)
+- [Recommendations](#recommendations)
+
+### Case Study Overview
 
 This data analysis project aims to provide insights into how different riders use a Chicago-based bike sharing company's services over the span of a year. Through analysis of various aspects of the trip data, we seek to identify usage trends which differentiate subscribers to the service ("annual members") from pay-per-trip riders ("casual riders"). This allows us to make data-driven recommendations to the company to aid them in thier goal of converting more casual riders into annual members.
 
