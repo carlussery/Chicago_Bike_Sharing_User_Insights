@@ -6,7 +6,7 @@
 - [The Question](#the-question)
 - [Data Sources](#data-sources)
 - [Tools](#tools)
-- [Data Cleaning / Prepartion](#data-cleaning/prepartion)
+- [Data Cleaning / Prepartion](#data-cleaningprepartion)
 - [Limitations](#limitations)
 - [Data Analysis](#data-analysis)
 - [Results/Findings](#results/findings)
