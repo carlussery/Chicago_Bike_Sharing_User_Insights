@@ -6,7 +6,7 @@
 - [The Question](#the-question)
 - [Data Sources](#data-sources)
 - [Tools](#tools)
-- [Data Cleaning / Prepartion](#data-cleaning--prepartion)
+- [Data Cleaning/Prepartion](#data-cleaningprepartion)
 - [Limitations](#limitations)
 - [Data Analysis](#data-analysis)
 - [Results/Findings](#resultsfindings)
@@ -38,7 +38,7 @@ The question we're answering is the following: **How do annual members and casua
 - [MySQL](https://www.mysql.com/): Data Cleaning, Data Merging, Data Analysis
 - [Tableau Public](https://public.tableau.com/app/discover): Creating a dashboard
 
-### Data Cleaning / Preparation
+### Data Cleaning/Preparation
 In the initial data preparation phase, we performed the following tasks:
 1. Data loading and inspection.
 2. Data cleaning and formating
