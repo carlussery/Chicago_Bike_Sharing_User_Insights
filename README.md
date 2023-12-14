@@ -110,6 +110,15 @@ ON
 |December|00:21:19|14513|00:10:33|138369|
 
 
-### Results
+### Results/Findings
+
+The analysis results are summarized as follows:
+1. **Casual riders take longer trips:** On average, the trip duration of casual riders is twice as long as that of annual members.
+2. **Annual members ride most frequently on weekdays and least frequently on weekends:** Annual member trips peaked on Tuesdays and Wednesdays while reaching lows on Saturdays and Sundays. Our hunch is that annual members are more likely to use the bikes to commute to work/school. Of course, further analysis is required to confirm this. 
+3. **Casual riders ride most freqently on weekends and least frequently on weekdays:** For casual riders, it's just the opposite. Trips peaked on Saturdays and Sundays reaching lows on Tuesdays and Wednesdays. Our hunch is that casual riders are looking to ride for leisurly purposes especially when you take the much longer average ride duration into consideration (I'm a poet and I know it 😃).
+
+ 
+
+
 
 
