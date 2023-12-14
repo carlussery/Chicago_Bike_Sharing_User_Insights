@@ -127,9 +127,20 @@ ON
 ### Results/Findings
 
 The analysis results are summarized as follows:
+
+![data_per_quarter](https://github.com/carlussery/Chicago_Bike_Sharing_User_Insights/assets/153660397/a7d973b5-9c8f-4279-ab8d-4b5278ab701d)
+
+
+
 1. **Casual riders take longer trips:** On average, the trip duration of casual riders is twice as long as that of annual members.
+   
+![Trips_per_Week](https://github.com/carlussery/Chicago_Bike_Sharing_User_Insights/assets/153660397/ef58079f-85ac-4077-9197-228bd7ad06f6)
+
+   
 2. **Annual members ride most frequently on weekdays and least frequently on weekends:** Annual member trips peaked on Tuesdays and Wednesdays while reaching lows on Saturdays and Sundays. Our hunch is that annual members are more likely to use the bikes to commute to work/school. Of course, further analysis is required to confirm this. 
 3. **Casual riders ride most freqently on weekends and least frequently on weekdays:** For casual riders, it's just the opposite. Trips peaked on Saturdays and Sundays reaching lows on Tuesdays and Wednesdays. Our hunch is that casual riders are looking to ride for leisurly purposes especially when you take the much longer average ride duration into consideration (I'm a poet and I know it 😃).
+
+To view the entire dashboard on Tableau click [here](https://public.tableau.com/app/profile/carl.ussery/viz/Bikeshare_Capstone/BikeShare2019CasualvsSubscriber)
 
 ### Recommendations
 
