@@ -32,13 +32,15 @@ In the initial data preparation phase, we performed the following tasks:
 2. Data cleaning and formating
 3. Data merging
 
-Upon initial analysis, it was determined to limit further analysis to trips under 1 hour in duration. This is because a) the vast majority of trips (96%) are under 1 hour in duration. We believe this most accurately reflects actual common usage on behalf of both annual members and casual riders. b) There were a number of extreme outliers (trip durations in the hundreds and even thousands of hours) which greatly skewed the average duration results. 
-
 For detailed documentation of the cleaning and preparation phase see the following:
 - Project Change log
   - [here](Cyclistic_Bike_Users.docx)
 - SQL Cleaning and analysis log
-  - [here](SQL_Analysis.md) 
+  - [here](SQL_Analysis.md)
+
+### Limitations
+
+**Upon initial analysis, it was determined to limit further analysis to trips under 1 hour in duration.** This is because a) the vast majority of trips (96%) are under 1 hour in duration. We believe this most accurately reflects actual common usage on behalf of both annual members and casual riders. b) There were a number of extreme outliers (trip durations in the hundreds and even thousands of hours) which greatly skewed the average duration results. 
 
 ### Data Analysis 
 
@@ -117,7 +119,12 @@ The analysis results are summarized as follows:
 2. **Annual members ride most frequently on weekdays and least frequently on weekends:** Annual member trips peaked on Tuesdays and Wednesdays while reaching lows on Saturdays and Sundays. Our hunch is that annual members are more likely to use the bikes to commute to work/school. Of course, further analysis is required to confirm this. 
 3. **Casual riders ride most freqently on weekends and least frequently on weekdays:** For casual riders, it's just the opposite. Trips peaked on Saturdays and Sundays reaching lows on Tuesdays and Wednesdays. Our hunch is that casual riders are looking to ride for leisurly purposes especially when you take the much longer average ride duration into consideration (I'm a poet and I know it 😃).
 
- 
+### Recommendations
+
+Based on the results of the analysis we recommend the following actions:
+- Collect data on both annual members and casual riders to find out why they use bike sharing.
+- Segment casual riders whose reasons align with mostly with that of annual members and offer them the value of becomming a subscriber. 
+
 
 
 
