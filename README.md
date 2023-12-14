@@ -46,4 +46,46 @@ For detailed documentation of the cleaning and preparation phase see the followi
    - How many bike trips were taken in 2019? How many were taken by annual members? Casual riders?
    - When did these trips most frequently happen?
    - What was the average trip duration?
-2. 
+2. We looked at number of trips and average trip duration per user type for the entire year in addition to looking at each on a per day, per month, and per quarter basis. Our aim was to identify any trends in ride frequency and duration and how they differ between annual members and casual riders.
+
+Below is the query we ran to look at this on a per month basis: 
+```sql
+CREATE TEMPORARY TABLE length_cust_months
+	SELECT MONTHNAME(start_time) AS fy19_month, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS num_customer_rides
+	FROM fy19_usage 
+	WHERE usertype = 'Customer' AND trip_duration <3600
+	GROUP BY MONTHNAME(start_time)
+    ORDER BY start_time; 
+    
+CREATE TEMPORARY TABLE length_subs_months
+	SELECT MONTHNAME(start_time) AS fy19_month, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_subscriber_length,  COUNT(trip_id) AS num_subscriber_rides
+	FROM fy19_usage 
+	WHERE usertype = 'Subscriber' AND trip_duration <3600
+	GROUP BY MONTHNAME(start_time)
+    ORDER BY start_time;
+  ```
+And now using the `JOIN` function to combine the two tables:
+```sql
+   SELECT c.fy19_month, c.avg_customer_length, c.num_customer_rides, s.avg_subscriber_length, s.num_subscriber_rides
+   FROM length_cust_months c 
+   JOIN length_subs_months s ON c.fy19_month  = s.fy19_month; 
+```
+|fy19_month|avg_customer_length|num_customer_rides|avg_subscriber_length|num_subscriber_rides|
+|----------|-------------------|------------------|---------------------|--------------------|
+|January|00:22:09|4020|00:10:29|98189|
+|February|00:19:10|2393|00:10:14|93131|
+|March|00:23:46|13786|00:10:48|149272|
+|April|00:26:00|39017|00:11:53|216713|
+|May|00:25:50|66408|00:12:32|284460|
+|June|00:25:08|88323|00:13:09|307666|
+|July|00:25:05|144160|00:13:36|379475|
+|August|00:24:38|154888|00:13:17|401473|
+|September|00:23:37|109631|00:12:41|362694|
+|October|00:22:01|61810|00:11:33|299956|
+|November|00:19:48|16961|00:10:37|158102|
+|December|00:21:19|14513|00:10:33|138369|
+
+
+### Results
+
+
