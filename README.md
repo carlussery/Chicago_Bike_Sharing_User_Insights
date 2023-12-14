@@ -9,7 +9,7 @@
 - [Data Cleaning / Prepartion](#data-cleaning--prepartion)
 - [Limitations](#limitations)
 - [Data Analysis](#data-analysis)
-- [Results/Findings](#results/findings)
+- [Results/Findings](#resultsfindings)
 - [Recommendations](#recommendations)
 
 ### Case Study Overview
