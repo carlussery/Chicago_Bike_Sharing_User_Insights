@@ -51,24 +51,48 @@ For detailed documentation of the cleaning and preparation phase see the followi
 Below is the query we ran to look at this on a per month basis: 
 ```sql
 CREATE TEMPORARY TABLE length_cust_months
-	SELECT MONTHNAME(start_time) AS fy19_month, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,  COUNT(trip_id) AS num_customer_rides
-	FROM fy19_usage 
-	WHERE usertype = 'Customer' AND trip_duration <3600
-	GROUP BY MONTHNAME(start_time)
-    ORDER BY start_time; 
-    
+	SELECT
+		MONTHNAME(start_time) AS fy19_month,
+		SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_customer_length,
+		COUNT(trip_id) AS num_customer_rides
+	FROM
+		fy19_usage 
+	WHERE
+		usertype = 'Customer' AND trip_duration <3600
+	GROUP BY
+		MONTHNAME(start_time)
+	ORDER BY
+		start_time; 
+```
+```sql
 CREATE TEMPORARY TABLE length_subs_months
-	SELECT MONTHNAME(start_time) AS fy19_month, SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_subscriber_length,  COUNT(trip_id) AS num_subscriber_rides
-	FROM fy19_usage 
-	WHERE usertype = 'Subscriber' AND trip_duration <3600
-	GROUP BY MONTHNAME(start_time)
-    ORDER BY start_time;
+	SELECT
+		MONTHNAME(start_time) AS fy19_month,
+		SEC_TO_TIME(FLOOR(AVG(trip_duration))) AS avg_subscriber_length,
+		COUNT(trip_id) AS num_subscriber_rides
+	FROM
+		fy19_usage 
+	WHERE
+		usertype = 'Subscriber' AND trip_duration <3600
+	GROUP BY
+		MONTHNAME(start_time)
+    	ORDER BY
+		start_time;
   ```
 And now using the `JOIN` function to combine the two tables:
 ```sql
-   SELECT c.fy19_month, c.avg_customer_length, c.num_customer_rides, s.avg_subscriber_length, s.num_subscriber_rides
-   FROM length_cust_months c 
-   JOIN length_subs_months s ON c.fy19_month  = s.fy19_month; 
+SELECT
+	c.fy19_month,
+	c.avg_customer_length,
+	c.num_customer_rides,
+	s.avg_subscriber_length,
+	s.num_subscriber_rides
+FROM
+	length_cust_months c 
+JOIN
+	length_subs_months s
+ON
+	c.fy19_month  = s.fy19_month; 
 ```
 |fy19_month|avg_customer_length|num_customer_rides|avg_subscriber_length|num_subscriber_rides|
 |----------|-------------------|------------------|---------------------|--------------------|
