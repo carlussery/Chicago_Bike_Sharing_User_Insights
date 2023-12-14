@@ -45,4 +45,5 @@ For detailed documentation of the cleaning and preparation phase see the followi
 1. Based on the data we had in the datasets, we conducted an initial exploratory analysis to answer key questions such as:
    - How many bike trips were taken in 2019? How many were taken by annual members? Casual riders?
    - When did these trips most frequently happen?
-   -  
+   - What was the average trip duration?
+2. 
