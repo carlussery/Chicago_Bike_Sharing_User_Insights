@@ -14,7 +14,7 @@
 
 ### Case Study Overview
 
-This data analysis project aims to provide insights into how different riders use a Chicago-based bike sharing company's services over the span of a year. Through analysis of various aspects of the trip data, we seek to identify usage trends which differentiate subscribers to the service ("annual members") from pay-per-trip riders ("casual riders"). This allows us to make data-driven recommendations to the company to aid them in thier goal of converting more casual riders into annual members.
+This data analysis project aims to provide insights into how different riders use a Chicago-based bike sharing company's services over the span of a year. Through analysis of various aspects of the trip data, we seek to identify usage trends which differentiate subscribers to the service ("annual members") from pay-per-trip riders ("casual riders"). This allows us to make data-driven recommendations to the company to aid them in their goal of converting more casual riders into annual members.
 
 ### The Question
 
