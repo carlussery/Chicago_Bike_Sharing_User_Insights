@@ -146,7 +146,7 @@ To view the entire dashboard on Tableau click [here](https://public.tableau.com/
 
 Based on the results of the analysis we recommend the following actions:
 - Collect data on both annual members and casual riders to find out why they use bike sharing.
-- Segment casual riders whose reasons align with mostly with that of annual members and offer them the value of becomming a subscriber. 
+- Segment casual riders whose reasons align with mostly with that of annual members and offer them the value of becoming a subscriber. 
 
 
 
