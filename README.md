@@ -14,7 +14,7 @@
 
 ### Case Study Overview
 
-This data analysis project aims to provide insights into how different riders use a Chicago-based bike sharing company's services over the span of a year. Through analysis of various aspects of the trip data, we seek to identify usage trends which differentiate subscribers to the service ("annual members") from pay-per-trip riders ("casual riders"). This allows us to make data-driven recommendations to the company to aid them in their goal of converting more casual riders into annual members.
+This data analysis project aims to provide insights into how different riders use a Chicago-based bike-sharing company's services over a year. Through analysis of various aspects of the trip data, we seek to identify usage trends that differentiate subscribers to the service ("annual members") from pay-per-trip riders ("casual riders"). This allows us to make data-driven recommendations to the company to aid them in their goal of converting more casual riders into annual members.
 
 ### The Question
 
@@ -41,7 +41,7 @@ The question we're answering is the following: **How do annual members and casua
 ### Data Cleaning/Preparation
 In the initial data preparation phase, we performed the following tasks:
 1. Data loading and inspection.
-2. Data cleaning and formating
+2. Data cleaning and formatting
 3. Data merging
 
 For detailed documentation of the cleaning and preparation phase see the following:
@@ -60,9 +60,9 @@ For detailed documentation of the cleaning and preparation phase see the followi
    - How many bike trips were taken in 2019? How many were taken by annual members? Casual riders?
    - When did these trips most frequently happen?
    - What was the average trip duration?
-2. We looked at number of trips and average trip duration per user type for the entire year in addition to looking at each on a per day, per month, and per quarter basis. Our aim was to identify any trends in ride frequency and duration and how they differ between annual members and casual riders.
+2. We looked at the number of trips and average trip duration per user type for the entire year in addition to looking at each on a per day, per month, and per quarter basis. Our aim was to identify any trends in ride frequency and duration and how they differ between annual members and casual riders.
 
-Below is the query we ran to look at this on a per month basis: 
+Below is the query we ran to look at this on a per-month basis: 
 ```sql
 CREATE TEMPORARY TABLE length_cust_months
 	SELECT
@@ -146,7 +146,7 @@ To view the entire dashboard on Tableau click [here](https://public.tableau.com/
 
 Based on the results of the analysis we recommend the following actions:
 - Collect data on both annual members and casual riders to find out why they use bike sharing.
-- Segment casual riders whose reasons align with mostly with that of annual members and offer them the value of becoming a subscriber. 
+- Segment casual riders whose reasons align mostly with that of annual members and offer them the value of becoming a subscriber. 
 
 
 
