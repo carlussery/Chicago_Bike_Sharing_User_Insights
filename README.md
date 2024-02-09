@@ -140,7 +140,7 @@ The analysis results are summarized as follows:
 2. **Annual members ride most frequently on weekdays and least frequently on weekends:** Annual member trips peaked on Tuesdays and Wednesdays while reaching lows on Saturdays and Sundays. Our hunch is that annual members are more likely to use the bikes to commute to work/school. Of course, further analysis is required to confirm this. 
 3. **Casual riders ride most frequently on weekends and least frequently on weekdays:** For casual riders, it's just the opposite. Trips peaked on Saturdays and Sundays reaching lows on Tuesdays and Wednesdays. Our hunch is that casual riders are looking to ride for leisurely purposes especially when you take the much longer average ride duration into consideration (I'm a poet and I know it 😃).
 
-To view the entire dashboard on Tableau click [here]([https://public.tableau.com/app/profile/carl.ussery/viz/Bikeshare_Capstone/BikeShare2019CasualvsSubscriber](https://public.tableau.com/app/profile/carl.ussery/viz/Bikeshare_Capstone/BikeShareDashboard))
+To view the entire dashboard on Tableau click [here]((https://public.tableau.com/app/profile/carl.ussery/viz/Bikeshare_Capstone/BikeShareDashboard)
 
 ### Recommendations
 
